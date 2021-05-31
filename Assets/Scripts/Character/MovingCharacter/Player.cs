@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MovingCharacter
 { 
-    Rigidbody2D rigidbody2d;
     Camera mainCamera;
     Vector3 mousePosition;
     Vector2 movement;
@@ -12,7 +11,6 @@ public class Player : MovingCharacter
     void Start()
     {
         mainCamera = Camera.main;
-        rigidbody2d = gameObject.GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -25,6 +23,7 @@ public class Player : MovingCharacter
     void FixedUpdate()
     {
         Vector3 dir = mousePosition - transform.position;
-        MoveAndRotateCharacter(rigidbody2d, dir, movement);
+        MoveCharacter(movement);
+        RotateCharacter(dir);
     }
 }

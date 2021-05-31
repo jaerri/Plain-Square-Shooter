@@ -7,10 +7,12 @@ public class MovingCharacter : Character
     public float movementSpeed = 1f;
     public float rotationSpeed = 5f;
 
-    public void MoveAndRotateCharacter(Rigidbody2D rigidbody2d, Vector3 dir, Vector2 movement)
+    public void MoveCharacter(Vector2 movement)
     {
         rigidbody2d.MovePosition(rigidbody2d.position + movement * movementSpeed * Time.fixedDeltaTime);
-
+    }
+    public void RotateCharacter(Vector3 dir)
+    {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.Euler(0, 0, angle - 90f);
 
