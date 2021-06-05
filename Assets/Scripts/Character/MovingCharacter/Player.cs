@@ -17,6 +17,7 @@ public class Player : MovingCharacter
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+        Vector2.ClampMagnitude(movement, movementSpeed);
         mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
     }
 
