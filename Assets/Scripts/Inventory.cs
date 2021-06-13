@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item
+public class Inventory : MonoBehaviour
 {
-    public Sprite icon;
-
-
+    public GameObject inventoryUI;
 }

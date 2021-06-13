@@ -9,6 +9,8 @@ public class MovingCharacter : Character
 
     public void MoveCharacter(Vector2 movement)
     {
+        Rigidbody2D rigidbody2d = gameObject.GetComponent<Rigidbody2D>();
+
         rigidbody2d.MovePosition(rigidbody2d.position + movement * movementSpeed * Time.fixedDeltaTime);
     }
     public void RotateCharacter(Vector3 dir)
