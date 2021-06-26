@@ -4,11 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class ItemSlotData
+{
+    public GameObject slot;
+    public Item itemType;
+    public int quantity;
+}
+
 public class Inventory : MonoBehaviour
 {   
     public GameObject inventoryUI;
     public GameObject slotPrefab;
-    public Dictionary<Type, Dictionary<string, dynamic>> inventoryList = new Dictionary<Type, Dictionary<string, dynamic>>();
+    public Dictionary<Type, ItemSlotData> inventoryList = new Dictionary<Type, ItemSlotData>();
 
     void Update()
     {
@@ -18,24 +25,23 @@ public class Inventory : MonoBehaviour
         }   
     }
 
-    Dictionary<string, dynamic> CreateSlot(GameObject prefab, Item itemType)
+    ItemSlotData CreateSlot(GameObject prefab, Item itemType)
     {
-        return new Dictionary<string, dynamic> {
-            { "Slot", Instantiate(prefab, inventoryUI.transform) },
-            { "ItemType", itemType },
-            { "Quantity", (int)0 }
+        return new ItemSlotData {
+             slot = Instantiate(prefab, inventoryUI.transform) ,
+             itemType = itemType ,
+             quantity = 0
         };
     }
 
-    public void UpdateSlot(Dictionary<string, dynamic> itemSlotData)
+    public void UpdateSlot(ItemSlotData itemSlotData)
     {
-        Debug.Log(itemSlotData);
-        Image displayImage = itemSlotData["Slot"].GetComponent<Image>();
-        if (itemSlotData["ItemType"] && displayImage)
+        Image displayImage = itemSlotData.slot.GetComponent<Image>();
+        if (itemSlotData.itemType && displayImage)
         {
-            displayImage.sprite = itemSlotData["ItemType"].icon;
+            displayImage.sprite = itemSlotData.itemType.icon;
             displayImage.color = Color.white;
-            displayImage.GetComponentInChildren<Text>().text = itemSlotData["Quantity"].ToString();
+            displayImage.GetComponentInChildren<Text>().text = itemSlotData.quantity.ToString();
         }
         else
         {
@@ -51,15 +57,15 @@ public class Inventory : MonoBehaviour
         
         if (!inventoryList.ContainsKey(itemType.GetType()))
         {
-            Dictionary<string, dynamic> itemSlotData = CreateSlot(slotPrefab, itemType);
-            itemSlotData["Quantity"]++;
+            ItemSlotData itemSlotData = CreateSlot(slotPrefab, itemType);
+            itemSlotData.quantity++;
             UpdateSlot(itemSlotData);
             inventoryList[itemType.GetType()] = itemSlotData;
         }
         else
         {
-            inventoryList[itemType.GetType()]["Quantity"]++;
-            inventoryList[itemType.GetType()]["ItemType"] = itemType;
+            inventoryList[itemType.GetType()].quantity++;
+            inventoryList[itemType.GetType()].itemType = itemType;
             UpdateSlot(inventoryList[itemType.GetType()]);
         }
 
