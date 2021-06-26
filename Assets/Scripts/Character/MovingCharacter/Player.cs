@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : MovingCharacter
 {
     public float cameraDist = 10f;
-    public GameObject inventoryUI;
 
     Camera mainCamera;
     Vector3 mousePosition;
@@ -19,8 +18,6 @@ public class Player : MovingCharacter
     void Update()
     {
         mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - cameraDist);
-
-        if (Input.GetKeyDown(KeyCode.I)) inventoryUI.SetActive(!inventoryUI.activeSelf);
 
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
