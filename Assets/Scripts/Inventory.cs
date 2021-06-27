@@ -27,8 +27,8 @@ public class Inventory : MonoBehaviour
     ItemSlotData CreateSlot(GameObject prefab, Item itemType)
     {
         return new ItemSlotData {
-             slot = Instantiate(prefab, inventoryUI.transform),
-             itemType = itemType,
+             slot = Instantiate(prefab, inventoryUI.transform) ,
+             itemType = itemType ,
              quantity = 0
         };
     }
