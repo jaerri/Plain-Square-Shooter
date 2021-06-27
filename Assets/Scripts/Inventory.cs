@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class ItemSlotData
 {
     public GameObject slot;
-    public Item itemType;
     public int quantity;
 }
 
@@ -24,21 +23,20 @@ public class Inventory : MonoBehaviour
         }   
     }
 
-    ItemSlotData CreateSlot(GameObject prefab, Item itemType)
+    ItemSlotData CreateSlot(GameObject prefab)
     {
         return new ItemSlotData {
-             slot = Instantiate(prefab, inventoryUI.transform) ,
-             itemType = itemType ,
+             slot = Instantiate(prefab, inventoryUI.transform),
              quantity = 0
         };
     }
 
-    public void UpdateSlot(ItemSlotData itemSlotData)
+    public void UpdateSlot(ItemSlotData itemSlotData, Item itemType)
     {
         Image displayImage = itemSlotData.slot.GetComponent<Image>();
-        if (itemSlotData.itemType && displayImage)
+        if (itemType && displayImage)
         {
-            displayImage.sprite = itemSlotData.itemType.icon;
+            displayImage.sprite = itemType.icon;
             displayImage.color = Color.white;
             displayImage.GetComponentInChildren<Text>().text = itemSlotData.quantity.ToString();
         }
@@ -56,16 +54,15 @@ public class Inventory : MonoBehaviour
         
         if (!inventoryList.ContainsKey(itemType.GetType()))
         {
-            ItemSlotData itemSlotData = CreateSlot(slotPrefab, itemType);
+            ItemSlotData itemSlotData = CreateSlot(slotPrefab);
             itemSlotData.quantity++;
-            UpdateSlot(itemSlotData);
+            UpdateSlot(itemSlotData, itemType);
             inventoryList[itemType.GetType()] = itemSlotData;
         }
         else
         {
             inventoryList[itemType.GetType()].quantity++;
-            inventoryList[itemType.GetType()].itemType = itemType;
-            UpdateSlot(inventoryList[itemType.GetType()]);
+            UpdateSlot(inventoryList[itemType.GetType()], itemType);
         }
 
         Destroy(itemObject);
