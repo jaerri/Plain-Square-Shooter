@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +25,7 @@ public class Inventory : MonoBehaviour
     public virtual void Pickup(GameObject itemObject)
     {
         Item itemType = itemObject.GetComponent<Item>();
-        
+
         if (!inventoryList.ContainsKey(itemType.GetType()))
         {
             ItemSlotData itemSlotData = CreateSlot();
@@ -47,9 +48,8 @@ public class Inventory : MonoBehaviour
         }
     }
 
-
     //utility function
-    public IEnumerable<Type> GetParentTypes(Type type)
+    public static IEnumerable<Type> GetParentTypes(Type type)
     {
         if (type == null)
         {

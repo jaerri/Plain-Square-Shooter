@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -57,11 +59,12 @@ public class PlayerInventory : Inventory
     public override void Pickup(GameObject itemObject)
     {
         Item itemType = itemObject.GetComponent<Item>();
-
+        //Debug.Log(GetParentTypes(itemType.GetType()).ToList().FindIndex(x => x == itemType.GetType()));
         if (!inventoryList.ContainsKey(itemType.GetType()))
         {
             ItemSlotData itemSlotData = CreateSlot(slotPrefab);
             itemSlotData.slot.name = itemType.name;
+            itemSlotData.slot.GetComponent<InventorySlot>().itemType = itemType;
             itemSlotData.quantity++;
             UpdateSlot(itemSlotData, itemType);
             inventoryList[itemType.GetType()] = itemSlotData;
