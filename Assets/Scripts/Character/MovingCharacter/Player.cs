@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class Player : MovingCharacter
 {
     public float cameraDist = 10f;
-    public Sprite mouseCursor;
+    public Sprite mouseCursorSprite;
+    public GameObject inventoryUI;
 
     public static GameObject cursorObject;
     public static GameObject playerObject;
-    public static PlayerInventory inventory;
 
     Camera mainCamera;
     Vector3 mousePosition;
@@ -20,11 +20,19 @@ public class Player : MovingCharacter
     void Start()
     {
         playerObject = gameObject;
-        inventory = gameObject.GetComponent<PlayerInventory>();
         mainCamera = Camera.main;
         Cursor.visible = false;
         cursorObject = new GameObject(name = "Cursor");
-        cursorObject.AddComponent<SpriteRenderer>().sprite = mouseCursor;
+        cursorObject.AddComponent<SpriteRenderer>().sprite = mouseCursorSprite;
+    }
+
+    public override void PickupItem(GameObject itemObject)
+    {
+        DroppedItem itemComponent = itemObject.GetComponent<DroppedItem>();
+
+        inventory.AddItem(itemComponent.item, 1);
+        inventoryUI.GetComponent<InventoryUI>().UpdateSlot(itemComponent.item);
+        Destroy(itemObject);
     }
 
     void Update()

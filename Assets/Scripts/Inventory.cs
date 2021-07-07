@@ -1,71 +1,41 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public partial class ItemSlotData
-{
-    public int quantity;
+[Serializable]
+public class ItemSlotData {
+    public int amount;
+    public Item item;
+
+    public ItemSlotData(Item _item, int _amount)
+    {
+        amount = _amount;
+        item = _item;
+    }
 }
 
-public class Inventory : MonoBehaviour
+[CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory")]
+public class Inventory : ScriptableObject
 {
-    public Dictionary<Type, ItemSlotData> inventoryList = new Dictionary<Type, ItemSlotData>();
+    public List<ItemSlotData> inventoryList = new List<ItemSlotData>();  
 
-    // inventory handler
-    public ItemSlotData CreateSlot() 
+    public void AddItem(Item item, int amount)
     {
-        return new ItemSlotData {
-             quantity = 0
-        };
-    }
-    
-    public virtual void Pickup(GameObject itemObject)
-    {
-        Item itemType = itemObject.GetComponent<Item>();
-
-        if (!inventoryList.ContainsKey(itemType.GetType()))
+        bool checkList(ItemSlotData slot)
         {
-            ItemSlotData itemSlotData = CreateSlot();
-            itemSlotData.quantity++;
-            inventoryList[itemType.GetType()] = itemSlotData;
+            return slot.item == item;
+        }
+
+        if (!inventoryList.Exists(checkList))
+        {
+            ItemSlotData itemSlotData = new ItemSlotData(item, amount);
+            inventoryList.Add(itemSlotData);
         }
         else
         {
-            inventoryList[itemType.GetType()].quantity++;
-        }
-
-        Destroy(itemObject);
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.GetComponent<Item>())
-        {
-            Pickup(collision.gameObject);
-        }
-    }
-
-    //utility function
-    public static IEnumerable<Type> GetParentTypes(Type type)
-    {
-        if (type == null)
-        {
-            yield break;
-        }
-
-        foreach (var i in type.GetInterfaces())
-        {
-            yield return i;
-        }
-
-        var currentBaseType = type.BaseType;
-        while (currentBaseType != null)
-        {
-            yield return currentBaseType;
-            currentBaseType = currentBaseType.BaseType;
+            inventoryList.Find(checkList).amount += amount;
         }
     }
 }

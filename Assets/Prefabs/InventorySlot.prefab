@@ -243,3 +243,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26698f767ebc9ff44b0f6bffcbb306c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemType: {fileID: 0}
+  tooltipPrefab: {fileID: 7305230296988033468, guid: 53186e967eb905040a0d67d7a7eb7a5f, type: 3}

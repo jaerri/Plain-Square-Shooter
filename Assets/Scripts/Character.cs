@@ -5,6 +5,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public int health;
+    public Inventory inventory;
 
     IEnumerator DamageEffect(Color dmgColor, float duration)
     {
@@ -34,6 +35,23 @@ public class Character : MonoBehaviour
         {
             StartCoroutine(DamageEffect(Color.red, 0.5f));
             Destroy(gameObject, 0.5f);
+        }
+    }
+
+    public virtual void PickupItem(GameObject itemObject)
+    {
+        DroppedItem itemComponent = itemObject.GetComponent<DroppedItem>();
+
+        inventory.AddItem(itemComponent.item, 1);
+        Destroy(itemObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!inventory) return;
+        if (collision.GetComponent<DroppedItem>())
+        {
+            PickupItem(collision.gameObject);
         }
     }
 }

@@ -1,29 +1,41 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Item itemType;
+    public Item item;
+    public GameObject tooltipPrefab;
 
     public static bool tooltipOn = false;
     GameObject tooltip;
 
     void CreateTooltip()
     {
-        tooltip = Instantiate(PlayerInventory.tooltipPrefab, transform.parent.parent.parent.parent);
+        tooltip = Instantiate(tooltipPrefab, transform.parent.parent.parent.parent);
 
-        for (int i = 0; i < tooltip.transform.childCount; i++)
+        foreach (Transform child in tooltip.transform.GetComponentsInChildren<Transform>())
         {
-            switch (tooltip.transform.GetChild(i).gameObject.name)
+            switch (child.name)
             {
-                case "CatagoryColorPanel":
-                    tooltip.transform.GetChild(i).GetComponent<Image>().color = Color.green;
+                case "CatagoryColor":
+                    child.GetComponent<Image>().color = item.itemTypeColor;
+                    break;
+                case "Icon":
+                    child.GetComponent<Image>().sprite = item.icon;
+                    break;
+                case "ItemName":
+                    child.GetComponent<Text>().text = item.name;
+                    break;
+                case "CatagoryName":
+                    child.GetComponent<Text>().text = item.itemTypeName;
+                    child.GetComponent<Text>().color = item.itemTypeColor;
                     break;
             }
         }
-        tooltip.name = gameObject.name + "'s tooltip panel";
+        tooltip.name = item.name + "'s tooltip panel";
     }
 
     void Start()
