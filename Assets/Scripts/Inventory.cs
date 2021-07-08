@@ -38,5 +38,10 @@ public class Inventory : ScriptableObject
             inventoryList.Find(checkList).amount += amount;
         }
     }
+
+    public void Clear()
+    {
+        inventoryList.Clear();
+    }
 }
 

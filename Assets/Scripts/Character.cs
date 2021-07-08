@@ -54,4 +54,9 @@ public class Character : MonoBehaviour
             PickupItem(collision.gameObject);
         }
     }
+
+    void OnApplicationQuit()
+    {
+        inventory.Clear();       
+    }
 }

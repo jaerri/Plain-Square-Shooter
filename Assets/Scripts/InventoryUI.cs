@@ -16,6 +16,7 @@ public class InventoryUI : MonoBehaviour
         if (itemSlots.ContainsKey(item)) slot = itemSlots[item];
         else slot = Instantiate(slotPrefab, transform);
 
+        itemSlots[item] = slot;
         slot.name = item.name;
         slot.GetComponent<InventorySlotUI>().item = item;
         
