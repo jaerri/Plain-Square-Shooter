@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c064913b863b0c14ea3a3bba08fe3a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 664a6afe89f72604c906e8d975b22259, type: 2}
+  item: {fileID: 11400000, guid: f245a3d44dec58b4e843bedd17dbea32, type: 2}
 --- !u!60 &328400608
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c064913b863b0c14ea3a3bba08fe3a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 664a6afe89f72604c906e8d975b22259, type: 2}
+  item: {fileID: 11400000, guid: f245a3d44dec58b4e843bedd17dbea32, type: 2}
 --- !u!212 &385040447
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1450,7 +1450,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1

@@ -18,7 +18,7 @@ public class InventoryUI : MonoBehaviour
 
         itemSlots[item] = slot;
         slot.name = item.name;
-        slot.GetComponent<InventorySlotUI>().item = item;
+        slot.GetComponent<ItemTooltip>().item = item;
         
         Image displayImage = slot.GetComponent<Image>();
         if (item && displayImage)

@@ -11,11 +11,11 @@ public class Player : MovingCharacter
 
     public static GameObject cursorObject;
     public static GameObject playerObject;
+    public static bool cursorOn = true;
 
     Camera mainCamera;
     Vector3 mousePosition;
     Vector2 movement;
-    
 
     void Start()
     {
